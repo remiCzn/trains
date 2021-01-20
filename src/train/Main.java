@@ -21,9 +21,19 @@ public class Main {
 			System.out.println(t1);
 			System.out.println(t2);
 			System.out.println(t3);
+			while(true) {
+				t1.move();
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
 		} catch (BadPositionForTrainException e) {
 			System.out.println("Le train " + e.getMessage());
 		}
+		
+		
 
 	}
 }

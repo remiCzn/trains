@@ -53,6 +53,7 @@ public class Train {
 		{
 			this.pos = new Position(e, pos.getDir());
 		}
+		System.out.println("Le train "+this.name+" est en position "+ this.pos.toString());
 	}
 	
 	@Override
