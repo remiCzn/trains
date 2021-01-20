@@ -31,6 +31,11 @@ public abstract class Element {
 		this.railway = r;
 	}
 
+	public Element getNextElement(Direction d)
+	{
+		return railway.getNextElement(this, d);
+	}
+	
 	@Override
 	public String toString() {
 		return this.name;

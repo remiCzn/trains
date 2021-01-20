@@ -19,7 +19,7 @@ package train;
  */
 public class Train {
 	private final String name;
-	private final Position pos;
+	private Position pos;
 
 	public Train(String name, Position p) throws BadPositionForTrainException {
 		if (name == null || p == null)
@@ -33,6 +33,28 @@ public class Train {
 		this.pos = p.clone();
 	}
 
+	public void move()
+	{
+		Element e = pos.getPos().getNextElement(pos.getDir());
+		
+		if(e instanceof Station)
+		{
+			Direction newDir;
+			if(pos.getDir() == Direction.LR)
+				newDir = Direction.RL;
+			else if(pos.getDir() == Direction.RL)
+				newDir = Direction.LR;
+			else
+				newDir = Direction.LR; //Par défaut, n'est pas censé arriver
+			
+			this.pos = new Position(e, newDir);
+		}
+		else
+		{
+			this.pos = new Position(e, pos.getDir());
+		}
+	}
+	
 	@Override
 	public String toString() {
 		StringBuilder result = new StringBuilder("Train[");

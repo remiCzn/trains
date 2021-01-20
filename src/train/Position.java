@@ -44,6 +44,10 @@ public class Position implements Cloneable {
 	public Element getPos() {
 		return pos;
 	}
+	public Direction getDir()
+	{
+		return direction;
+	}
 
 	@Override
 	public String toString() {

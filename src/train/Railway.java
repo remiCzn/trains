@@ -33,4 +33,19 @@ public class Railway {
 		}
 		return result.toString();
 	}
+	
+	public Element getNextElement(Element e, Direction d)
+	{
+		int elementIndex = 0;
+		for(int i = 0; i<elements.length;i++)
+		{
+			if(elements[i].equals(e))
+				elementIndex = i;
+		}
+		if(d==Direction.LR)
+			return elements[elementIndex+1];
+		else
+			return elements[elementIndex-1];
+		
+	}
 }
