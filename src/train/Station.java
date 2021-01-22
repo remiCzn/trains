@@ -10,11 +10,50 @@ package train;
  */
 public class Station extends Element {
 	private final int size;
+	private int nbTrain;
 
 	public Station(String name, int size) {
 		super(name);
 		if(name == null || size <=0)
 			throw new NullPointerException();
 		this.size = size;
+		this.nbTrain = 0;
+	}
+
+	@Override
+	public synchronized void addTrain() {
+		while (!verify()) {
+			try {
+				wait();
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+		nbTrain++;
+	}
+
+	@Override
+	public synchronized void removeTrain() {
+		nbTrain--;
+		notifyAll();
+	}
+	
+	public boolean verify() {
+		simulate();
+		boolean res = invariant();
+		stopSimulation();
+		return res;
+	}
+	
+	private void simulate() {
+		nbTrain++;
+	}
+	
+	private boolean invariant() {
+		return nbTrain<=size;
+	}
+	
+	private void stopSimulation() {
+		nbTrain--;
 	}
 }

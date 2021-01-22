@@ -40,4 +40,7 @@ public abstract class Element {
 	public String toString() {
 		return this.name;
 	}
+	
+	public abstract void addTrain();
+	public abstract void removeTrain();
 }

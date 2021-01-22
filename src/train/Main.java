@@ -14,6 +14,7 @@ public class Main {
 		System.out.println("The railway is:");
 		System.out.println("\t" + r);
 		Position p = new Position(A, Direction.LR);
+		Position p2 = new Position(D, Direction.RL);
 		try {
 			Train t1 = new Train("1", p);
 			Train t2 = new Train("2", p);
@@ -21,14 +22,9 @@ public class Main {
 			System.out.println(t1);
 			System.out.println(t2);
 			System.out.println(t3);
-			while(true) {
-				t1.move();
-				try {
-					Thread.sleep(1000);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-			}
+			t1.start();
+			t2.start();
+			t3.start();
 		} catch (BadPositionForTrainException e) {
 			System.out.println("Le train " + e.getMessage());
 		}

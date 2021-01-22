@@ -17,10 +17,10 @@ package train;
  * @author Philippe Tanguy <philippe.tanguy@imt-atlantique.fr>
  * @version 0.3
  */
-public class Train {
+public class Train extends Thread implements Runnable  {
 	private final String name;
 	private Position pos;
-
+	
 	public Train(String name, Position p) throws BadPositionForTrainException {
 		if (name == null || p == null)
 			throw new NullPointerException();
@@ -28,32 +28,30 @@ public class Train {
 		// A train should be first be in a station
 		if (!(p.getPos() instanceof Station))
 			throw new BadPositionForTrainException(name);
-
+		
+		p.getPos().addTrain();
 		this.name = name;
 		this.pos = p.clone();
 	}
 
 	public void move()
 	{
-		Element e = pos.getPos().getNextElement(pos.getDir());
+		System.out.print("Le train "+this.name+" essaie d'aller en ");
 		
-		if(e instanceof Station)
-		{
-			Direction newDir;
-			if(pos.getDir() == Direction.LR)
-				newDir = Direction.RL;
-			else if(pos.getDir() == Direction.RL)
-				newDir = Direction.LR;
-			else
-				newDir = Direction.LR; //Par défaut, n'est pas censé arriver
-			
-			this.pos = new Position(e, newDir);
-		}
-		else
-		{
-			this.pos = new Position(e, pos.getDir());
-		}
+		pos.toNextPosition();
+		
 		System.out.println("Le train "+this.name+" est en position "+ this.pos.toString());
+	}
+	
+	public void run() {
+		while(true) {
+			move();
+			try {
+				Thread.sleep(2000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 	
 	@Override
@@ -64,5 +62,9 @@ public class Train {
 		result.append(" is on ");
 		result.append(this.pos);
 		return result.toString();
+	}
+	
+	public boolean invariant() {
+		return false;
 	}
 }
