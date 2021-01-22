@@ -6,7 +6,7 @@ package train;
 public class Main {
 	public static void main(String[] args) {
 		Station A = new Station("GareA", 3);
-		Station D = new Station("GareD", 3);
+		Station D = new Station("GareD", 2);
 		Section AB = new Section("AB");
 		Section BC = new Section("BC");
 		Section CD = new Section("CD");

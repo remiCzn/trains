@@ -11,6 +11,7 @@ package train;
 public class Station extends Element {
 	private final int size;
 	private int nbTrain;
+	private int reservedPlaces;
 
 	public Station(String name, int size) {
 		super(name);
@@ -18,6 +19,7 @@ public class Station extends Element {
 			throw new NullPointerException();
 		this.size = size;
 		this.nbTrain = 0;
+		this.reservedPlaces = 0;
 	}
 	
 	public int getSize() {
@@ -42,10 +44,25 @@ public class Station extends Element {
 	public int getNbTrain() {
 		return nbTrain;
 	}
-
+	
+	public int getReservedPlaces() {
+		return this.reservedPlaces;
+	}
+	
+	public void AddReservedPlace()
+	{
+		this.reservedPlaces ++;
+	}
+	
+	public void RemoveReservedPlace()
+	{
+		this.reservedPlaces --;
+	}
+	
 	@Override
 	public synchronized void removeTrain() {
 		nbTrain--;
+		reservedPlaces--;
 		notifyAll();
 	}
 	

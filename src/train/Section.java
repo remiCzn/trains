@@ -33,6 +33,10 @@ public class Section extends Element {
 			}
 		}
 		isAccessible++;
+		//Si l'élement precédent était une gare (si le train est en train de quitter la gare)
+		if(t.getElement() instanceof Station) {
+			this.getNextStation(t.getDirection()).AddReservedPlace(); // ~reservedPlace++
+		}
 		System.out.println("Le train "+t.getTrainName()+" est en "+this);
 		
 	}
@@ -46,29 +50,28 @@ public class Section extends Element {
 	public boolean verify(Train t) {
 		simulate(t);
 		boolean res = invariant(t);
-		stopSimulation();
+		stopSimulation(t);
 		return res;
 	}
 	
 	private void simulate(Train t) {
 		isAccessible++;
+		this.getNextStation(t.getDirection()).AddReservedPlace();
 	}
 	
 	private boolean invariant(Train t) {
 		boolean canGoToTheNextStation = true;
-		if (t.getElement() instanceof Station) {
+		if(t.getElement() instanceof Station) {
 			Direction d = t.getDirection();
 			Station nextStation = this.getNextStation(d);
-			int sizeNextStation = nextStation.getSize();
-			
-			int nbTrainTillNextStation = this.countTrainTillNextStation(d); //on compte déjà le train qu'on souhaite faire déplacer car on prend en compte le isAccessible qu'on a incrémenté dans simulate()
-			canGoToTheNextStation = (nbTrainTillNextStation <= sizeNextStation);
+			canGoToTheNextStation = nextStation.getReservedPlaces() <= nextStation.getSize();
 		}
 		return isAccessible <= 1 && canGoToTheNextStation;
 		
 	}
 	
-	private void stopSimulation() {
+	private void stopSimulation(Train t) {
 		isAccessible--;
+		this.getNextStation(t.getDirection()).RemoveReservedPlace();;
 	}
 }
