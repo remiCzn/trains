@@ -19,17 +19,28 @@ public class Station extends Element {
 		this.size = size;
 		this.nbTrain = 0;
 	}
+	
+	public int getSize() {
+		return size;
+	}
 
 	@Override
-	public synchronized void addTrain() {
+	public synchronized void addTrain(Train t) {
+		System.out.println("Le train "+t.getTrainName()+" essaie d'aller en "+this);
 		while (!verify()) {
 			try {
+				System.out.println(t);
 				wait();
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
 		}
 		nbTrain++;
+		System.out.println("Le train "+t.getTrainName()+" est en "+this);
+	}
+	
+	public int getNbTrain() {
+		return nbTrain;
 	}
 
 	@Override

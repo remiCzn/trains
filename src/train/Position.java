@@ -50,11 +50,10 @@ public class Position implements Cloneable {
 		return direction;
 	}
 	
-	public void toNextPosition() {
+	public void toNextPosition(Train t) {
 		Element nextElement = pos.getNextElement(direction);
-		System.out.println(nextElement);
 		
-		nextElement.addTrain();
+		nextElement.addTrain(t);
 		pos.removeTrain();
 		
 		if(nextElement instanceof Station)

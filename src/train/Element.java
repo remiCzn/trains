@@ -36,11 +36,26 @@ public abstract class Element {
 		return railway.getNextElement(this, d);
 	}
 	
+	public Station getNextStation(Direction d) {
+		if (getNextElement(d) instanceof Station) {
+			return (Station) getNextElement(d);
+		}
+		return getNextElement(d).getNextStation(d);
+	}
+	
+	public int countTrainTillNextStation(Direction d) {
+		if (getNextElement(d) instanceof Station) {
+			return ((Station) getNextElement(d)).getNbTrain();
+		}
+		return getNbTrain() + getNextElement(d).countTrainTillNextStation(d);
+	}
+	
 	@Override
 	public String toString() {
 		return this.name;
 	}
 	
-	public abstract void addTrain();
+	public abstract void addTrain(Train t);
 	public abstract void removeTrain();
+	public abstract int getNbTrain();
 }

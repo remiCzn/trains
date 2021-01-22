@@ -28,19 +28,17 @@ public class Train extends Thread implements Runnable  {
 		// A train should be first be in a station
 		if (!(p.getPos() instanceof Station))
 			throw new BadPositionForTrainException(name);
-		
-		p.getPos().addTrain();
 		this.name = name;
 		this.pos = p.clone();
+		
+		p.getPos().addTrain(this);
 	}
 
 	public void move()
-	{
-		System.out.print("Le train "+this.name+" essaie d'aller en ");
+	{		
+		pos.toNextPosition(this);
 		
-		pos.toNextPosition();
-		
-		System.out.println("Le train "+this.name+" est en position "+ this.pos.toString());
+		//System.out.println("Le train "+this.name+" est en position "+ this.pos.toString());
 	}
 	
 	public void run() {
@@ -66,5 +64,17 @@ public class Train extends Thread implements Runnable  {
 	
 	public boolean invariant() {
 		return false;
+	}
+	
+	public String getTrainName() {
+		return name;
+	}
+	
+	public Element getElement(){
+		return pos.getPos();
+	}
+	
+	public Direction getDirection() {
+		return pos.getDir();
 	}
 }
