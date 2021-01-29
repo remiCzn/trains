@@ -43,13 +43,6 @@ public abstract class Element {
 		return getNextElement(d).getNextStation(d);
 	}
 	
-	public int countTrainTillNextStation(Direction d) {
-		if (getNextElement(d) instanceof Station) {
-			return ((Station) getNextElement(d)).getNbTrain();
-		}
-		return getNbTrain() + getNextElement(d).countTrainTillNextStation(d);
-	}
-	
 	@Override
 	public String toString() {
 		return this.name;
@@ -58,4 +51,7 @@ public abstract class Element {
 	public abstract void addTrain(Train t);
 	public abstract void removeTrain();
 	public abstract int getNbTrain();
+	
+	public abstract int CountToRight(Train t);
+	public abstract int CountToLeft(Train t);
 }

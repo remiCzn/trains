@@ -84,4 +84,14 @@ public class Station extends Element {
 	private void stopSimulation() {
 		nbTrain--;
 	}
+
+	@Override
+	public int CountToRight(Train t) {
+		return 0;
+	}
+
+	@Override
+	public int CountToLeft(Train t) {
+		return 0;
+	}
 }
